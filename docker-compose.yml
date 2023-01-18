@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  alpr:
+    image: platerecognizer/alpr:thailand
+    container_name: alpr
+    #user: 1000:1000
+    user: root
+    volumes:
+      - ./license:/license
+    ports:
+      - 8990:8080
+    networks:
+      - backend
+    dns:
+      - 1.1.1.1
+    restart: always
+    environment:
+      LICENSE_KEY: ${LICENSE_KEY} 
+      TOKEN: ${TOKEN}
+      TZ: "Asia/Bangkok"
+      #WORKERS: "2" # enable this when use multi-thread
+
+networks:
+  backend:
+    external:
+      name: backend
