@@ -1,0 +1,70 @@
+# Environment files
+.env
+*.env
+!default.env
+
+# License files
+/license/*
+!license/.gitkeep
+
+# Logs
+/logs/*
+*.log
+npm-debug.log*
+
+# Runtime data
+/data/*
+!data/.gitkeep
+
+# Docker volumes
+docker-volumes/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Additional Docker ignores
+.docker/
+*.dockerfile
+docker-compose.override.yml
+
+# Test images and data
+/test-images/*
+!test-images/.gitkeep
+/results/*
+!results/.gitkeep
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Security and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Python virtual environment
+venv/
+.env/
+.venv/
