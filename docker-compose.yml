@@ -3,22 +3,47 @@ services:
   alpr:
     image: platerecognizer/alpr:thailand
     container_name: alpr
-    #user: 1000:1000
     user: root
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+        reservations:
+          cpus: '2'
+          memory: 2G
     volumes:
       - ./license:/license
+      - ./data:/data
+      - ./logs:/logs
     ports:
       - 8990:8080
     networks:
       - backend
     dns:
       - 1.1.1.1
-    restart: always
+      - 8.8.8.8
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     environment:
       LICENSE_KEY: ${LICENSE_KEY} 
       TOKEN: ${TOKEN}
       TZ: "Asia/Bangkok"
-      #WORKERS: "2" # enable this when use multi-thread
+      WORKERS: ${WORKERS:-2}
+      MAX_REQUESTS: ${MAX_REQUESTS:-5000}
+      CONFIDENCE_THRESHOLD: ${CONFIDENCE_THRESHOLD:-80}
+      REGION: ${REGION:-th}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
 
 networks:
   backend:
